@@ -5,6 +5,7 @@
     <link href="./stylesheets/screen.css" media="all" rel="stylesheet" type="text/css"/>
     <script language="javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" type="text/javascript"></script>
 		<script language="javascript" src="javascripts/sprite.js" type="text/javascript"></script>
+		<script language="javascript" src="javascripts/config.js" type="text/javascript"></script>
 		<script language="javascript" src="javascripts/entities.js" type="text/javascript"></script>
   </head>
   <body>
@@ -13,8 +14,8 @@
       //<![CDATA[
 			var FPS = 30;//FOR animation
                  
-      var enemies = [new entities.Enemy(2,5),new entities.Enemy(6,7),new entities.Enemy(8,10),new entities.Enemy(6,14),new entities.Enemy(2,16),new entities.Enemy(2,10)];
-      var team = [new entities.TeamMate(2,5),new entities.TeamMate(6,7),new entities.TeamMate(8,10),new entities.TeamMate(6,14),new entities.TeamMate(2,16),new entities.TeamMate(2,10)];
+      var enemies = [new entities.BluePlayer(2,5),new entities.BluePlayer(6,7),new entities.BluePlayer(8,10),new entities.BluePlayer(6,14),new entities.BluePlayer(2,16),new entities.BluePlayer(2,10)];
+      var team = [new entities.WhitePlayer(1.5,5),new entities.WhitePlayer(5.5,7),new entities.WhitePlayer(7.5,10),new entities.WhitePlayer(5.5,14),new entities.WhitePlayer(1.5,16),new entities.WhitePlayer(1.5,10)];
       
       //Fill of aqua make the red go to shit
       var canvasElement = $("<canvas width='" + entities.CANVAS_WIDTH + "' height='" + entities.CANVAS_HEIGHT + "' style='border-style: solid;border-color: aqua;'></canvas");
