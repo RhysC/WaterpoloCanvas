@@ -15,18 +15,25 @@
 			var FPS = 30;//FOR animation
                  
       var enemies = [new entities.BluePlayer(2,5),new entities.BluePlayer(6,7),new entities.BluePlayer(8,10),new entities.BluePlayer(6,14),new entities.BluePlayer(2,16),new entities.BluePlayer(2,10)];
-      var team = [new entities.WhitePlayer(1.5,5),new entities.WhitePlayer(5.5,7),new entities.WhitePlayer(7.5,10),new entities.WhitePlayer(5.5,14),new entities.WhitePlayer(1.5,16),new entities.WhitePlayer(1.5,10)];
+      var team =[];
+      enemies.forEach(function(enemy) {
+        var temp = new entities.WhitePlayer(0,0);
+        temp.goalSideOf(entities.goal1, enemy);
+        team.push(temp);
+      });
+      
+      //var team = [new entities.WhitePlayer(1.5,5),new entities.WhitePlayer(5.5,7),new entities.WhitePlayer(7.5,10),new entities.WhitePlayer(5.5,14),new entities.WhitePlayer(1.5,16),new entities.WhitePlayer(1.5,10)];
       
       //Fill of aqua make the red go to shit
       var canvasElement = $("<canvas width='" + entities.CANVAS_WIDTH + "' height='" + entities.CANVAS_HEIGHT + "' style='border-style: solid;border-color: aqua;'></canvas");
       var canvas = canvasElement.get(0).getContext("2d");
       canvasElement.appendTo('body');
       
-      setInterval(function() {
+    /*  setInterval(function() {
         update();
         draw();
       }, 1000/FPS);
-      
+    */  
       function update() {
         //animation goes here
       }
@@ -46,7 +53,8 @@
           teammate.draw();
         });
         
-      }        
+      }      
+        draw();   
       //]]>
     </script>
   </body>
