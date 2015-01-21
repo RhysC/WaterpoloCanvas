@@ -1,20 +1,13 @@
 var entities = (function() {
-  var multiplier = 30;
-  var poolWidth = 20;
-  var poolLength = 30;
-  var goalDepth = 0.5;
-  var goalWidth = 3;
-  var CANVAS_WIDTH = (poolLength * multiplier) + (goalDepth * multiplier);
-  var CANVAS_HEIGHT = poolWidth * multiplier;
-        		
+          		
   var PositionBoundary = function(x,color){
     var self = this;
-    self.x = x;
+    self.x = x*config.multiplier;
     self.color = color;
     self.draw = function(){
       canvas.beginPath();
       canvas.moveTo(self.x, 0); 
-      canvas.lineTo(self.x, CANVAS_HEIGHT); 
+      canvas.lineTo(self.x, config.CANVAS_HEIGHT); 
       canvas.strokeStyle = self.color;
       canvas.stroke();
     }
@@ -23,22 +16,22 @@ var entities = (function() {
     var self = this;
     self.color= "#00A";
     self.x=x;
-    self.y=(CANVAS_HEIGHT/2);
-    self.width=goalDepth*multiplier;
-    self.height=goalWidth*multiplier;
+    self.y=(config.CANVAS_HEIGHT/2);
+    self.width=config.goalDepth*config.multiplier;
+    self.height=config.goalWidth*config.multiplier;
     self.draw = function(){
-       canvas.fillRect(x, (CANVAS_HEIGHT/2)-(self.height/2), self.width, self.height);
+       canvas.fillRect(x, (config.CANVAS_HEIGHT/2)-(self.height/2), self.width, self.height);
     }					
   }
   
   var goal1 = new Goal(0);
-  var goal2 = new Goal(CANVAS_WIDTH-(goalDepth*multiplier));
+  var goal2 = new Goal(config.CANVAS_WIDTH-(config.goalDepth*config.multiplier));
        
-  var first2Meter = new PositionBoundary(2*multiplier, "#f00");
-  var second2Meter = new PositionBoundary(28*multiplier, "#f00");
-  var first5Meter = new PositionBoundary(5*multiplier, "#ff0");
-  var second5Meter = new PositionBoundary(25*multiplier, "#ff0");
-  var halfway = new PositionBoundary(15*multiplier, "#000");
+  var first2Meter = new PositionBoundary(2, "#f00");
+  var second2Meter = new PositionBoundary(config.poolLength -2, "#f00");
+  var first5Meter = new PositionBoundary(5, "#ff0");
+  var second5Meter = new PositionBoundary(config.poolLength-5, "#ff0");
+  var halfway = new PositionBoundary(config.poolLength/2, "#000");
     
   var drawField = function(){
     halfway.draw();
@@ -50,34 +43,32 @@ var entities = (function() {
     goal2.draw();
   }
   
-  
-  
   var InFieldEntity = function(x,y,sprite){
     var self = this;
-    self.x = x*multiplier;
-    self.y = (y)*multiplier;
+    self.x = x * config.multiplier;
+    self.y = y * config.multiplier;
     self.sprite = sprite;
     self.draw = function() {
       self.sprite.draw(canvas, self.x, self.y);
     };
   }
   
-  var Enemy = function(x,y){
+  var BluePlayer = function(x,y){
     InFieldEntity.call(this, x, y, Sprite("enemy"));    
   }
-  var TeamMate = function(x,y){
+  var WhitePlayer = function(x,y){
     InFieldEntity.call(this, x, y, Sprite("player"));    
   }   
   var Ball = function(x,y){
     InFieldEntity.call(this, x, y, Sprite("ball"));    
   }     
   return {
-    Enemy : Enemy,
-    TeamMate : TeamMate,
+    BluePlayer : BluePlayer,
+    WhitePlayer : WhitePlayer,
     Ball: Ball,
     Goal:Goal,
     drawField : drawField, 
-    CANVAS_WIDTH : CANVAS_WIDTH,
-    CANVAS_HEIGHT : CANVAS_HEIGHT
+    CANVAS_WIDTH : config.CANVAS_WIDTH,
+    CANVAS_HEIGHT : config.CANVAS_HEIGHT
   }
 }());
