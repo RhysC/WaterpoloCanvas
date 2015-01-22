@@ -63,6 +63,10 @@ var entities = (function(positioning, canvasHelpers) {
       var point = positioning.getPointBetween(self.goal.fieldPosition, player.fieldPosition, distanceFromPlayer);
       self.setPosition(point.x, point.y);
     };
+    self.inBetween = function(playerA, playerB, distanceFromPlayerB) {
+      var point = positioning.getPointBetween(playerA.fieldPosition, playerB.fieldPosition, distanceFromPlayerB);
+      self.setPosition(point.x, point.y);
+    };
   };
 
   var whiteGoal = new Goal(0);

@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html>
   <head>
     <title>Water polo Demo</title>
@@ -14,7 +14,7 @@
   <body>
     <div>
       <button id="standard6on6">6 on 6</button>
-      <button id="manDown">Standard man down</button>
+      <button id="dropOff2Spot">Drop off 2 Spot</button>
     </div>
     <script type='text/javascript'>
       $(function(){
@@ -30,14 +30,23 @@
           thing.draw(canvas);
         });
       }
+      drawTeams = function drawTeams(teams) {
+        thingsToDraw = [entities.field];
+        Array.prototype.push.apply(thingsToDraw, teams.blue);
+        Array.prototype.push.apply(thingsToDraw, teams.white);
+        draw();
+      };
 
       $("#standard6on6").click(function(){
-        thingsToDraw = sixOnSix.standard();
-        draw();
+        var teams = sixOnSix.standard();
+        drawTeams(teams);
       });
 
 
-
+      $("#dropOff2Spot").click(function(){
+        var teams = sixOnSix.dropOff2Spot();
+        drawTeams(teams);
+      });
 
         setTimeout(draw, 100);
       });
