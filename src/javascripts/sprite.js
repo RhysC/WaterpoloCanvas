@@ -31,6 +31,20 @@
         );
       },
       
+      drawCentered: function(canvas, x, y) {
+        canvas.drawImage(
+          image,
+          sourceX,
+          sourceY,
+          width,
+          height,
+          x-(width/2),
+          y-(height/2),
+          width,
+          height
+        );
+      },
+      
       fill: function(canvas, x, y, width, height, repeat) {
         repeat = repeat || "repeat";
         var pattern = canvas.createPattern(image, repeat);

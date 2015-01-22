@@ -1,5 +1,6 @@
 var canvasHelpers = (function(){
-  var drawYAxisLine = function(x, color){
+  var drawYAxisLine = function(canvas, x, color){
+    console.log({canvas:canvas, x:x, color:color});
     canvas.beginPath();
     canvas.moveTo(x*config.multiplier, 0); 
     canvas.lineTo(x*config.multiplier, config.CANVAS_HEIGHT); 
@@ -7,7 +8,7 @@ var canvasHelpers = (function(){
     canvas.stroke();
   }
 
-  var drawRect = function(x, y, length, height){
+  var drawRect = function(canvas, x, y, length, height){
     canvas.fillRect(
       (x * config.multiplier), 
       (y * config.multiplier), 
@@ -15,10 +16,10 @@ var canvasHelpers = (function(){
       (height * config.multiplier));    
   }
 
-  var drawSprite = function(position,sprite){
+  var drawSprite = function(canvas, position, sprite){
     var x = position.getX() * config.multiplier;
     var y = position.getY() * config.multiplier;
-    sprite.draw(canvas, x, y);
+    sprite.drawCentered(canvas, x, y);
   }
   return {
     drawYAxisLine:drawYAxisLine,
@@ -27,23 +28,24 @@ var canvasHelpers = (function(){
   };
 })();
 
-var entities = (function(field) {
+var entities = (function(positioning) {
+  console.log(positioning);
   var FieldPosition = function(x,y){
     this.getX = function(){ return x; };
     this.getY = function(){ return y; };
   };
   
   var PositionBoundary = function(x,color){
-    this.draw = function(){
-      canvasHelpers.drawYAxisLine(x,color);    
+    this.draw = function(canvas){
+      canvasHelpers.drawYAxisLine(canvas, x, color);    
     }
   }
   
   var Goal = function(x){
     var self = this;
     self.fieldPosition = new FieldPosition(x, config.poolWidth/2);
-    self.draw = function(){
-      canvasHelpers.drawRect(x,(config.poolWidth/2)-(config.goalWidth/2),config.goalDepth,config.goalWidth);
+    self.draw = function(canvas){
+      canvasHelpers.drawRect(canvas, x, (config.poolWidth/2)-(config.goalWidth/2), config.goalDepth, config.goalWidth);
     }					
   }
    
@@ -57,12 +59,12 @@ var entities = (function(field) {
       self.fieldPosition = new FieldPosition(x,y);
     };
     self.goalSideOf = function(goal, player, distanceFromPlayer) {
-      var point = field.getPointBetween(goal.fieldPosition, player.fieldPosition, distanceFromPlayer);
+      var point = positioning.getPointBetween(goal.fieldPosition, player.fieldPosition, distanceFromPlayer);
       self.setPosition(point.x,point.y);
     };
     
-    self.draw = function() {
-      canvasHelpers.drawSprite(self.fieldPosition, self.sprite);
+    self.draw = function(canvas) {
+      canvasHelpers.drawSprite(canvas, self.fieldPosition, self.sprite);
     };  
   }
   
@@ -85,15 +87,17 @@ var entities = (function(field) {
   var second5Meter = new PositionBoundary(config.poolLength-5, "#ff0");
   var halfway = new PositionBoundary(config.poolLength/2, "#000");
     
-  var drawField = function(){
-    halfway.draw();
-    first2Meter.draw();
-    second2Meter.draw();
-    first5Meter.draw();
-    second5Meter.draw();
-    goal1.draw();
-    goal2.draw();
-  }
+  var field = {
+    draw : function(canvas){
+      halfway.draw(canvas);
+      first2Meter.draw(canvas);
+      second2Meter.draw(canvas);
+      first5Meter.draw(canvas);
+      second5Meter.draw(canvas);
+      goal1.draw(canvas);
+      goal2.draw(canvas);
+    }
+  };
   
   return {
     createBluePlayer : createBluePlayer,
@@ -101,6 +105,6 @@ var entities = (function(field) {
     createBall: createBall,
     goal1:goal1,
     goal2:goal2,
-    drawField : drawField    
+    field : field    
   }
-}(fieldPositioning));
+}(positioning));
