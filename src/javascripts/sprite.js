@@ -2,6 +2,10 @@
   function LoaderProxy() {
     return {
       draw: $.noop,
+      drawCentered: $.noop,
+      canDraw: function() {
+        return false;
+      },
       fill: $.noop,
       frame: $.noop,
       update: $.noop,
@@ -9,13 +13,13 @@
       height: null
     };
   }
-  
+
   function Sprite(image, sourceX, sourceY, width, height) {
     sourceX = sourceX || 0;
     sourceY = sourceY || 0;
     width = width || image.width;
     height = height || image.height;
-    
+
     return {
       draw: function(canvas, x, y) {
         canvas.drawImage(
@@ -30,7 +34,7 @@
           height
         );
       },
-      
+
       drawCentered: function(canvas, x, y) {
         canvas.drawImage(
           image,
@@ -38,44 +42,48 @@
           sourceY,
           width,
           height,
-          x-(width/2),
-          y-(height/2),
+          x - (width / 2),
+          y - (height / 2),
           width,
           height
         );
       },
-      
+
+      canDraw: function() {
+        return true;
+      },
+
       fill: function(canvas, x, y, width, height, repeat) {
         repeat = repeat || "repeat";
         var pattern = canvas.createPattern(image, repeat);
         canvas.fillColor(pattern);
         canvas.fillRect(x, y, width, height);
       },
-      
+
       width: width,
       height: height
     };
-  };
-  
+  }
+
   Sprite.load = function(url, loadedCallback) {
     var img = new Image();
     var proxy = LoaderProxy();
-    
+
     img.onload = function() {
       var tile = Sprite(this);
-      
+
       $.extend(proxy, tile);
-      
-      if(loadedCallback) {
+
+      if (loadedCallback) {
         loadedCallback(proxy);
       }
     };
-    
+
     img.src = url;
-    
+
     return proxy;
   };
- 
+
   var spriteImagePath = "images/";
 
   window.Sprite = function(name, callback) {
