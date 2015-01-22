@@ -6,6 +6,7 @@
     <script language="javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" type="text/javascript"></script>
 		<script language="javascript" src="javascripts/sprite.js" type="text/javascript"></script>
 		<script language="javascript" src="javascripts/config.js" type="text/javascript"></script>
+		<script language="javascript" src="javascripts/fieldPositioning.js" type="text/javascript"></script>
 		<script language="javascript" src="javascripts/entities.js" type="text/javascript"></script>
   </head>
   <body>
@@ -14,18 +15,16 @@
       //<![CDATA[
 			var FPS = 30;//FOR animation
                  
-      var enemies = [new entities.BluePlayer(2,5),new entities.BluePlayer(6,7),new entities.BluePlayer(8,10),new entities.BluePlayer(6,14),new entities.BluePlayer(2,16),new entities.BluePlayer(2,10)];
+      var enemies = [new entities.createBluePlayer(2,5),new entities.createBluePlayer(6,7),new entities.createBluePlayer(8,10),new entities.createBluePlayer(6,14),new entities.createBluePlayer(2,16),new entities.createBluePlayer(2,10)];
       var team =[];
       enemies.forEach(function(enemy) {
-        var temp = new entities.WhitePlayer(0,0);
-        temp.goalSideOf(entities.goal1, enemy);
+        var temp = new entities.createWhitePlayer(0,0);
+        temp.goalSideOf(entities.goal1, enemy, 0.5);
         team.push(temp);
       });
-      
-      //var team = [new entities.WhitePlayer(1.5,5),new entities.WhitePlayer(5.5,7),new entities.WhitePlayer(7.5,10),new entities.WhitePlayer(5.5,14),new entities.WhitePlayer(1.5,16),new entities.WhitePlayer(1.5,10)];
-      
+            
       //Fill of aqua make the red go to shit
-      var canvasElement = $("<canvas width='" + entities.CANVAS_WIDTH + "' height='" + entities.CANVAS_HEIGHT + "' style='border-style: solid;border-color: aqua;'></canvas");
+      var canvasElement = $("<canvas width='" + config.CANVAS_WIDTH + "' height='" + config.CANVAS_HEIGHT + "' style='border-style: solid;border-color: aqua;'></canvas");
       var canvas = canvasElement.get(0).getContext("2d");
       canvasElement.appendTo('body');
       
@@ -39,7 +38,7 @@
       }
       
       function draw() {
-        canvas.clearRect(0, 0, entities.CANVAS_WIDTH, entities.CANVAS_HEIGHT);
+        canvas.clearRect(0, 0, config.CANVAS_WIDTH, config.CANVAS_HEIGHT);
                
         entities.drawField();
         
@@ -54,7 +53,7 @@
         });
         
       }      
-        draw();   
+       setTimeout(draw, 1000);    
       //]]>
     </script>
   </body>
