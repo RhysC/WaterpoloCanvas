@@ -1,4 +1,4 @@
-var fieldPositioning = (function() {
+var positioning = (function() {
     
   var getPointBetween = function(target, origin, distanceFromOrigin) {
     var opposite = target.getY() - origin.getY();
