@@ -12,7 +12,7 @@ var sixOnFive = (function(){
     new entities.createBluePlayer(7,8.5),//2 spot
     new entities.createBluePlayer(2,8.5),//3 spot and post man
     new entities.createBluePlayer(7,11.5),//4 spot
-    new entities.createBluePlayer(2,16),//5 spot
+    new entities.createBluePlayer(2,15),//5 spot
     new entities.createBluePlayer(2,11.5)//6 spot and center fwd/Post man
     ];
   };
