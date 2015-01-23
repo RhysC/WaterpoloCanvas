@@ -32,9 +32,9 @@ var sixOnFive = (function(){
     var blue = standardBlueAttack();
 
     var one = new entities.createWhitePlayer(0,0);
-    one.inBetween(blue[THREE_SPOT], blue[ONE_SPOT], 1);
+    one.inBetween(blue[ONE_SPOT], blue[THREE_SPOT], 1);
 
-  /*  var two = new entities.createWhitePlayer(0,0);
+    var two = new entities.createWhitePlayer(0,0);
     two.inBetween(blue[TWO_SPOT], blue[THREE_SPOT], 1);
 
     var three = new entities.createWhitePlayer(0,0);
@@ -44,12 +44,11 @@ var sixOnFive = (function(){
     four.inBetween(blue[FIVE_SPOT], blue[SIX_SPOT], 1);
 
     var five = new entities.createWhitePlayer(0,0);
-    five.inBetween(blue[THREE_SPOT], blue[SIX_SPOT], 1);
-*/
+    five.inBetween(blue[THREE_SPOT], blue[SIX_SPOT], 1.5);
 
     return {
       blue: blue,
-      white: [one]//,two,three,four,five]
+      white: [one,two,three,four,five]
     };
   };
 
