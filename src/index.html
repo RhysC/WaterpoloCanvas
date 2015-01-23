@@ -10,16 +10,20 @@
   <script language="javascript" src="javascripts/positioning.js" type="text/javascript"></script>
   <script language="javascript" src="javascripts/canvasHelpers.js" type="text/javascript"></script>
   <script language="javascript" src="javascripts/entities.js" type="text/javascript"></script>
-  <script language="javascript" src="javascripts/plays.js" type="text/javascript"></script>
+  <script language="javascript" src="javascripts/evenPlays.js" type="text/javascript"></script>
+  <script language="javascript" src="javascripts/manDownPlays.js" type="text/javascript"></script>
 </head>
 
 <body>
   <div>
     <button id="standard6on6">6 on 6</button>
     <button id="dropOff2Spot">Drop off 2 Spot</button>
+    <button id="sixOnFive">Six on Five</button>
+  </div>
   </div>
   <div>
-    <button id="showNumbers">Show numbering</button>
+    <button id="showNumbers">Show Numbering</button>
+    <button id="showGridLines">Show Grid Lines</button>
   </div>
   <script type='text/javascript'>
     $(function() {
@@ -54,6 +58,11 @@
         currentPlay = sixOnSix.dropOff2Spot;
         drawTeams();
       });
+      $("#sixOnFive").click(function() {
+        currentPlay = sixOnFive.standard;
+        drawTeams();
+      });
+
 
       $("#showNumbers").click(function() {
         var teams = currentPlay();
@@ -61,6 +70,10 @@
           var position = i+1;
           canvasHelpers.drawText(canvas, teams.blue[i].fieldPosition, "" + position);
         }
+      });
+
+      $("#showGridLines").click(function() {
+        canvasHelpers.showGridLines(canvas);
       });
 
       setTimeout(draw, 100);

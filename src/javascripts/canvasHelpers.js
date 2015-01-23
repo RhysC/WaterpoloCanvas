@@ -23,11 +23,27 @@ var canvasHelpers = (function() {
     canvas.font = "20pt Calibri";
     canvas.fillText(text, x, y);
   };
+  var showGridLines = function(canvas){
+    canvas.beginPath();
+    for (var x = 0; x < config.poolLength; x += 1) {
+      var realX = (x * config.multiplier) + 0.5;
+      canvas.moveTo(realX, 0);
+      canvas.lineTo(realX, config.poolWidth * config.multiplier);
+    }
+    for (var y = 0; y < config.poolWidth; y += 1) {
+      var realY = (y * config.multiplier) + 0.5;
+      canvas.moveTo(0, realY);
+      canvas.lineTo(config.poolLength* config.multiplier, realY);
+    }
+    canvas.strokeStyle = "#eee";
+    canvas.stroke();
+  };
 
   return {
     drawYAxisLine: drawYAxisLine,
     drawRect: drawRect,
     drawSprite: drawSprite,
-    drawText:drawText
+    drawText:drawText,
+    showGridLines:showGridLines
   };
 })();
